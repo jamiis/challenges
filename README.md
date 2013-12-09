@@ -1,2 +1,2 @@
 solutions to code challenges.
-currently only project eueler.
+currently only project euler.
