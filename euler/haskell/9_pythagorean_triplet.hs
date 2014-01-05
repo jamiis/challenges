@@ -1,6 +1,6 @@
--- *very* slow implementation. 
--- need ... learn ... more ... haskell!
-triplet = [[a, b, c] | c <- [1..430], b <- [1..c], a <- [1..b],
-    a^2 + b^2 == c^2,  -- pythagorean theorem
-    a + b + c == 1000] -- special condition
-main = print( product( head triplet ) )
+main = print $ (\(x,y,z) -> x*y*z) $ head [(a, b, c) | 
+    a <- [1..430], 
+    b <- [1..a], 
+    c <- [sqrt(a^2 + b^2)], 
+    a^2 + b^2 == c^2, 
+    a + b + c == 1000]
