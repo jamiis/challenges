@@ -1,4 +1,5 @@
-primes = 2 : sieve [3,5..]
-  where
-    sieve (p:xs) = p : sieve [x | x <- xs, x `rem` p /= 0]
-main = print $ primes!!10001
+isPrime :: (Integral a) => a -> [a] -> Bool
+isPrime n (x:xs) = (x*x > n) || (n `mod` x /= 0) && (isPrime n xs)
+
+main = print $ primes !! 10001
+    where primes = 2 : filter (\x -> isPrime x primes) [3..]
