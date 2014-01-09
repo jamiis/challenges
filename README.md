@@ -1,4 +1,6 @@
-solutions to code challenges.
-currently only project euler.
+Solutions to code challenges.
 
-more to come on the haskell front as I learn!
+| Folder | Description            |
+| ------ | ---------------------- |
+| euler  | project euler problems |
+| misc   | miscelaneous           |
