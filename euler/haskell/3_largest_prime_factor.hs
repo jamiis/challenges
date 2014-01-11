@@ -10,4 +10,4 @@ primeFactors n = [x | x <- factors n, isPrime x]
 maxPrimeFactor :: (Integral a) => a -> a
 maxPrimeFactor n = head $ primeFactors n
 
-main = print . maxPrimeFactor 600851475143
+main = print $ maxPrimeFactor 600851475143
