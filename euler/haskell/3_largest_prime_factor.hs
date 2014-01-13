@@ -1,8 +1,11 @@
+import Data.List
+
 isPrime :: (Integral a) => a -> Bool
 isPrime n = factors n == [n,1]
 
 factors :: (Integral a) => a -> [a]
-factors n = [x | x <- [n,n-1..1], n `mod` x == 0]
+factors n = reverse. sort $ concat [[d, n `div` d] | d <- [1..square], n `mod` d == 0]
+    where square = round . sqrt $ fromIntegral n
 
 primeFactors :: (Integral a) => a -> [a]
 primeFactors n = [x | x <- factors n, isPrime x]
