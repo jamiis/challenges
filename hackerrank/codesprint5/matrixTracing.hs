@@ -1,11 +1,12 @@
 -- number of possible paths in an mxn matrix.
 -- start: top-left. end: bottom-right. can only move right and down.
 traces :: (Integral a) => a -> a -> a
-traces m n = combos `div` repeats
-    where rights  = n-1 -- required num of rights
-          downs   = m-1 -- required num of downs
-          combos  = product [1..(rights+downs)] -- all possible right/down combinations
-          repeats = product [1..rights] * product [1..downs] -- quantity of repeats, e.g. R1 R2 D1 == R2 R1 D1
+traces m n = product [bigger+1..moves] `div` product [1..smaller]
+    where rights = n-1 -- required num of rights
+          downs  = m-1 -- required num of downs
+          moves  = rights + downs -- total number of moves required
+          -- find the bigger dimension to speedup division above
+          (bigger, smaller) = if rights > downs then (rights,downs) else (downs,rights)
 
 -- special mod. only happens if x > n.
 mod' :: (Integral a) => a -> a -> a
