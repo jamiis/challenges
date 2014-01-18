@@ -1,23 +1,24 @@
--- number of possible paths in an mxn matrix.
--- start: top-left. end: bottom-right. can only move right and down.
-traces :: (Integral a) => a -> a -> a
-traces m n = product [bigger+1..moves] `div` product [1..smaller]
-    where rights = n-1 -- required num of rights
-          downs  = m-1 -- required num of downs
-          moves  = rights + downs -- total number of moves required
-          -- find the bigger dimension to speedup division above
-          (bigger, smaller) = if rights > downs then (rights,downs) else (downs,rights)
-
 -- special mod. only happens if x > n.
 mod' :: (Integral a) => a -> a -> a
 x `mod'` n
     | x > n     = x `mod` n
     | otherwise = x
 
+-- n choose k
+choose n 0 = 1
+choose 0 k = 0
+choose n k = choose (n-1) (k-1) * n `div` k
+
+-- number of traces in a matrix equals n-choose-k combinations
+traces m n = choose n' k' 
+    where n' = (m-1) + (n-1) -- required number of down moves and right moves
+          k' =  m-1          -- required number of down moves
+
 main = do
     contents <- getContents
-        -- convert stdin to a list of lists of Ints
+        -- convert stdin to a list of [m,n] dimensions
     let dimensions = map (map read . words) $ tail $ lines contents :: [[Integer]]
-        -- map m x n pairs to trace quantity
-        traces' = map (\[m,n] -> (traces m n) `mod'` (10^9+7)) dimensions
+        -- calculate number of traces for each dimension in list
+        traces' = map (\[m,n] -> traces m n `mod'` outputLimit) dimensions
+            where outputLimit = 10^9+7
     mapM_ print traces'
