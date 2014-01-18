@@ -7,10 +7,16 @@ traces m n = combos `div` repeats
           combos  = product [1..(rights+downs)] -- all possible right/down combinations
           repeats = product [1..rights] * product [1..downs] -- quantity of repeats, e.g. R1 R2 D1 == R2 R1 D1
 
+-- special mod. only happens if x > n.
+mod' :: (Integral a) => a -> a -> a
+x `mod'` n
+    | x > n     = x `mod` n
+    | otherwise = x
+
 main = do
     contents <- getContents
         -- convert stdin to a list of lists of Ints
     let dimensions = map (map read . words) $ tail $ lines contents :: [[Integer]]
         -- map m x n pairs to trace quantity
-        traces' = map (\[m,n] -> traces m n) dimensions
+        traces' = map (\[m,n] -> (traces m n) `mod'` (10^9+7)) dimensions
     mapM_ print traces'
