@@ -16,13 +16,12 @@ binaryBools = iterate increment [True]
 nineify :: [[Bool]] -> [[Char]]
 nineify = map (map (\b -> if b then '9' else '0'))
 
-main = do
-    contents <- getContents
-        -- parse stdin to Int list
-    let ns = map read . tail $ lines contents :: [Int]
-        -- infinite, ascending list of binary numbers, but with 9s in place of 1s
-        ninearys = map read . nineify $ binaryBools :: [Int]
-        -- find nineary number that is a multiple of n
-        ninearyMultiple n = fromJust $ find (\x -> x `mod` n == 0) ninearys
-    mapM_ print (map ninearyMultiple ns) 
-
+main = interact multiples
+          -- parse stdin to Int list
+    where parseNs contents = map read . tail $ lines contents :: [Int]
+          -- infinite, ascending list of binary numbers, but with 9s in place of 1s
+          binary9s = map read . nineify $ binaryBools :: [Int]
+          -- find binary9s number that is a multiple of n
+          binary9sMultiple n = fromJust $ find (\x -> x `mod` n == 0) binary9s
+          -- formatted list of binary9s multiples
+          multiples = unlines . map (show . binary9sMultiple) . parseNs
