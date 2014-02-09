@@ -15,14 +15,10 @@ binary9s = map binaryBoolsToBinary9s $ binaryBools :: [Int]
           -- converts list of Bools into binary9s (ie. 9, 90, 99, 900, ...)
           binaryBoolsToBinary9s = read . map (\b -> if b then '9' else '0')
 
--- find the smallest binary9s number that is a multiple of n
-findBinary9sMultiple :: Int -> Int
-findBinary9sMultiple n = fromJust $ find (\x -> x `mod` n == 0) binary9s
-  
 -- list of binary9s multiples
 binary9sMultiples :: [Int] -> [Int]
-binary9sMultiples = map findBinary9sMultiple
-    where findBinary9sMultiple n = fromJust $ find (`isMultiple` n) binary9s
+binary9sMultiples = map binary9sMultiple
+    where binary9sMultiple n = fromJust $ find (`isMultiple` n) binary9s
           isMultiple x n = x `mod` n == 0
 
 -- format input (first number is dropped), e.g. "3\n5\n7\n1" -> [5,7,1]
