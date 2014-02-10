@@ -40,11 +40,23 @@ class Forest():
                 # if pos: cuts += 1
                 if pos not in path:
                     path.append(pos)
-                    pprint(path)
+                    self.pretty_print_path(path)
                 for move in possible_moves(pos):
                     if move not in path:
                         stack.append(move)
         return self.height
+
+    def pretty_print_path(self, path):
+        adventure = ""
+        for r in xrange(self.height):
+            for c in xrange(self.width):
+                pos = r,c
+                if pos in path:
+                    adventure += "X "
+                else:
+                    adventure += str(self.trees[r][c]) + " "
+            adventure += "\n"
+        print adventure
 
 def parse_forests():
     f = open(argv[1], 'r')
