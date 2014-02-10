@@ -1,0 +1,53 @@
+https://www.hackerrank.com/contests/programming-interviews-practice-session/challenges/road-through-forest
+
+Build Road
+
+You have to reach from one castle, castle A, to another, castle B. But there is a forest in between castle A and castle B. The forest consists of cells. Each cell will either be an empty area represented by a 0 or will be occupied by a tree represented by a 1. You can walk through an empty cell but not through a tree. You can move to any adjacent cell, but not outside the forest. Adjacent cells include all the 8 neighbors of a cell. (This number might be lesser for cells at the edges and corners). You can reach CASTLE B if a consistent trail of empty area is made from CASTLE A to CASTLE B without being blocked by trees. What is the count of minimum number of trees which you need to cut in the forest to reach castle B from castle A?
+
+See this diagram below for furthur clarification.
+
+CASTLE A  
+1 0 1 0 1 1 1 1 0 0 0 <- you can start anywhere in this row  
+1 1 1 1 1 1 1 0 1 1 1   
+1 1 1 0 0 1 1 1 1 1 1 <- you can end anywhere in this row  
+CASTLE B  
+Input Format
+The first line contains a number T which shows the number of test cases. Each test case’s first line will contain two numbers x and y separated by space, the number of rows and columns in the forest. Each test case will have x rows consisting of y columns each separated by spaces. The values in the forest will be 0 representing empty area and 1 representing column.
+
+Output Format
+Output T lines containing the minimum number of trees you need to cut for each test case.
+
+Constraints
+1 <= T <= 20
+1 <= N,M <= 20
+
+Sample Input:
+
+2  
+5 7  
+0 1 1 1 0 1 0  
+0 0 1 0 1 0 0  
+1 1 1 1 1 1 1  
+1 1 1 1 1 1 1  
+1 1 1 1 1 1 1  
+2 2  
+1 1  
+1 1  
+Sample Output
+
+3   
+2   
+Explanation
+
+For the first case, a possible solution is:
+
+0 1 1 1 0 1 0
+0 0 1 0 1 0 0
+1 1 1 C 1 1 1
+1 1 1 C 1 1 1
+1 1 1 C 1 1 1
+C represent the trees to be cut which is 3 in count
+
+2 2
+1 1
+1 1 Here you need to cut atleast 2 trees to make a road.
