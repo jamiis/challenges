@@ -48,6 +48,7 @@ def add_train_line(stops, name, time_between_stations=None):
         defining the time between stops, e.g. [('Houston','14th',12) .. ]
     """
     # invalidate all calculated, in-memory shortest routes
+    global routes
     routes = {}
     # remember whether or not edge lengths were provided
     global have_times
@@ -60,6 +61,7 @@ def add_train_line(stops, name, time_between_stations=None):
         [1]*len(stops),
     )
     # add station-to-station connections to subway graph
+    global subway
     for stop1, stop2, dist in time_between_stations:
         # add bi-directional edges
         subway[stop1][stop2] = dist
@@ -89,6 +91,16 @@ def take_train(origin, destination):
     return path
 
 if __name__ == "__main__":
+    # test without times
+    add_train_line(stops=["Canal", "Houston", "Christopher", "14th"], name="1")
+    add_train_line(stops=["Spring", "West 4th", "14th", "23rd"], name="E")
+    print take_train(origin="Houston", destination="23rd")
+
+    # reset subway
+    global subway
+    subway = defaultdict(lambda:{})
+
+    # test with times
     add_train_line(stops=["Canal", "Houston", "Christopher", "14th"], name="1",
         time_between_stations=[
             ("Canal", "Houston", 3),
