@@ -1,6 +1,8 @@
 in
 *.swp
 
+*.pyc
+
 dist
 cabal-dev
 *.o
