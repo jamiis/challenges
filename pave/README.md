@@ -4,6 +4,8 @@ The shortest path is found using Dijkstra's algorithm
 which I implemented using a priority queue. In the situation
 that station-to-station times were not provided, `take_train`
 does not return an estimated time, only the shortest path.
+An example of how to use the module is in the main logic at 
+the end of `subway_station.py`.
 
 A few implementation thoughts:
 - If the plan was to increase increase the size of this module, it would be wise to begin abstracting pieces into Classes, e.g. the subway object should be a `Graph` class.
