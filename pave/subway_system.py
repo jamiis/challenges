@@ -1,5 +1,9 @@
 from pprint import pprint as pp
 from heapq import heappush, heappop
+from collections import defaultdict
+
+have_times = False
+subway = defaultdict(lambda:{})
 
 def shortest_paths(graph, start):
     """
@@ -27,18 +31,36 @@ def shortest_paths(graph, start):
                 )
     return shortest_paths
 
-def add_train_line(stops, name):
-    pass
+def add_train_line(stops, name, time_between_stations=None):
+    # remember whether or not edge lengths were provided
+    have_times = bool(time_between_stations)
+    # constructs time_between_stations (with time=1) if not provided
+    time_between_stations = time_between_stations or zip(
+        stops[0:len(stops)-1],
+        stops[1:len(stops)],
+        [1]*len(stops),
+    )
+    # adds station-to-station connections to subway graph
+    for stop1, stop2, dist in time_between_stations:
+        # adds bi-directional edges
+        subway[stop1][stop2] = dist
+        subway[stop2][stop1] = dist
 
-def take_train(origin, destination, time_between_stations=None):
+def take_train(origin, destination):
+    # calculate shortest paths
+    # optional: memoize shortest paths?
+    # return shortest path and, conditionally, distance
     pass
 
 if __name__ == "__main__":
-    graph = {
-        'a': { 'a':0, 'b':5, 'c':7, 'd':9, 'e':25 },
-        'b': { 'a':5, 'b':0, 'c':3, 'd':8 },
-        'c': { 'a':7, 'b':3, 'c':0, 'd':1 },
-        'd': { 'a':9, 'b':8, 'c':1, 'd':0 },
-        'e': { 'a':25 },
-    }
-    pp(shortest_paths(graph, 'b'))
+    add_train_line(stops=["Canal", "Houston", "Christopher", "14th"], name="1",
+        time_between_stations=[("Canal", "Houston", 3),
+                               ("Houston", "Christopher", 7),
+                               ("Christopher", "14th", 2),
+                               ])
+    add_train_line(stops=["Spring", "West 4th", "14th", "23rd"], name="E",
+        time_between_stations=[("Spring", "West 4th", 1),
+                               ("West 4th", "14th", 5),
+                               ("14th", "23rd", 2),
+                               ])
+    pp(shortest_paths(subway, 'Houston'))
